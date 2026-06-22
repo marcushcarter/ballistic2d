@@ -15,5 +15,5 @@ target_link_libraries(ballistic_core
 PUBLIC
     ballistic_compiler_options
     ballistic_drivers
-    # stb
+    stb
 )

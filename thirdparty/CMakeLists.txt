@@ -1,16 +1,23 @@
-# add_library(stb INTERFACE)
-# target_include_directories(stb INTERFACE stb)
+set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+set(GLFW_USE_HYBRID_HPG ON CACHE BOOL "" FORCE)
+add_subdirectory(glfw)
 
-# add_library(glm INTERFACE)
-# target_include_directories(glm INTERFACE glm)
+add_library(glad STATIC glad/src/glad.c)
+target_include_directories(glad PUBLIC glad/include)
 
-# file(GLOB IMGUI_CORE imgui/*.cpp)
-# set(IMGUI_SRC ${IMGUI_CORE} imgui/backends/imgui_impl_win32.cpp imgui/backends/imgui_impl_vulkan.cpp)
-# add_library(imgui STATIC ${IMGUI_SRC})
-# target_include_directories(imgui PUBLIC imgui ${Vulkan_INCLUDE_DIRS})
+add_library(stb INTERFACE)
+target_include_directories(stb INTERFACE stb)
 
-# add_library(vma INTERFACE)
-# target_include_directories(vma INTERFACE vma/include ${Vulkan_INCLUDE_DIRS})
+add_library(glm INTERFACE)
+target_include_directories(glm INTERFACE glm)
+
+file(GLOB IMGUI_CORE imgui/*.cpp)
+set(IMGUI_SRC ${IMGUI_CORE} imgui/backends/imgui_impl_glfw.cpp imgui/backends/imgui_impl_opengl3.cpp)
+add_library(imgui STATIC ${IMGUI_SRC})
+target_include_directories(imgui PUBLIC imgui)
+target_link_libraries(imgui PUBLIC glfw)
 
 # add_library(IconFontCppHeaders INTERFACE)
 # target_include_directories(IconFontCppHeaders INTERFACE IconFontCppHeaders)
