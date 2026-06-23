@@ -130,11 +130,21 @@ void EditorApplication::_create_new_project(std::string p_project_folder, bool p
     std::ofstream marker(folder / "ballistic2d.project");
     marker << "ballistic_project=1\n";
 
+    std::filesystem::path ballistic_dir = folder / ".ballistic";
+    std::filesystem::create_directories(ballistic_dir);
+    set_hidden(ballistic_dir.string());
     
-    std::filesystem::create_directories(folder / ".ballistic");
-    set_hidden((folder / ".ballistic").string());
-    
-    if (p_version_control) return;
+    std::filesystem::create_directories(folder / "assets");
+    std::filesystem::create_directories(folder / ".scenes");
+
+    if (p_version_control) {
+        std::filesystem::path gitignore_path = folder / ".gitignore";
+        std::ofstream gitignore(gitignore_path, std::ios::trunc);
+        if (gitignore.is_open()) {
+            gitignore << ".ballistic/\n";
+            gitignore << "*.exe\n";
+        }
+    }
 }
 
 void EditorApplication::_update_launcher()
@@ -161,7 +171,7 @@ void EditorApplication::_update_launcher()
     float start_y = (region.y - block_height) * 0.5f;
     float start_x = (region.x - button_size.x) * 0.5f;
 
-    const char* new_project_string = ICON_FA_LOCATION_ARROW " New Project";
+    const char* new_project_string = ICON_FA_ROCKET " New Project";
     const char* open_project_string = ICON_FA_SHARE " Open Project";
 
     ImGui::SetCursorPos(ImVec2(start_x, start_y));
@@ -194,7 +204,7 @@ void EditorApplication::_update_launcher()
         ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x - btn_size - ImGui::GetStyle().ItemSpacing.x);
         ImGui::InputText("##ProjectLocation", new_project_location, sizeof(new_project_location));
         ImGui::SameLine();
-        if (ImGui::Button(ICON_FA_FOLDER, ImVec2(btn_size, btn_size))) {
+        if (ImGui::Button(ICON_FA_FOLDER_OPEN, ImVec2(btn_size, btn_size))) {
             std::string selected;
             if (open_folder_dialog(selected)) strncpy_s(new_project_location, selected.c_str(), _TRUNCATE);
         }
@@ -204,12 +214,10 @@ void EditorApplication::_update_launcher()
 
         bool name_empty = (new_project_name[0] == '\0');
         bool location_empty = new_project_location[0] == '\0';
-
         std::string base = new_project_location;
         std::string project_folder = base + "\\" + new_project_name;
         bool base_exists = std::filesystem::exists(base);
         bool project_exists = std::filesystem::exists(project_folder);
-
         bool invalid = name_empty || location_empty || !base_exists || project_exists;
 
         if (location_empty || !base_exists) {
@@ -226,7 +234,7 @@ void EditorApplication::_update_launcher()
         float create_width = 140.0f;
         ImGui::SetCursorPosX((ImGui::GetWindowWidth() - create_width) * 0.5f);
         ImGui::BeginDisabled(invalid);
-        if (ImGui::Button(ICON_FA_LOCATION_ARROW " Create Project", ImVec2(create_width, 0))) {            
+        if (ImGui::Button(ICON_FA_ARROW_UP_RIGHT_FROM_SQUARE " Create Project", ImVec2(create_width, 0))) {            
             _create_new_project(project_folder, new_project_use_git);
             _load_project(project_folder);
             new_project_popup_open = false;

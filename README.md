@@ -32,15 +32,15 @@ cmake ..
 cmake --build .
 ```
 
-<!-- <p align="center">
-  <a href="./.github/assets/glass-closeup.png" title="Glass Closeup (click to enlarge)">
-    <img src="./.github/assets/glass-closeup.png" alt="Glass Closeup" width="360">
+<p align="center">
+  <a href="./.github/editor.png" title="Editor (click to enlarge)">
+    <img src="./.github/editor.png" alt="Editor" width="360">
   </a>
   &nbsp;&nbsp;
-  <a href="./.github/assets/mirror-reflection.png" title="Mirror Reflection (click to enlarge)">
-    <img src="./.github/assets/mirror-reflection.png" alt="Mirror Reflection" width="360">
+  <a href="./.github/launcher.png" title="Launcher (click to enlarge)">
+    <img src="./.github/launcher.png" alt="Launcher" width="360">
   </a>
   <br>
-  <small><em>Left: glass closeup — Right: mirror reflection.</em></small>
-</p> -->
+  <small><em>Left: editor — Right: project launcher.</em></small>
+</p>
 
