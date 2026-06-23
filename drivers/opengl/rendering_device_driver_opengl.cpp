@@ -98,14 +98,66 @@ Error RenderingDeviceDriverOpengl::image_resize(Image& r_image, uint32_t p_width
     return Ok;
 }
 
-void RenderingDeviceDriverOpengl::image_bind_sampled(Image& r_image, uint32_t p_unit)
+void RenderingDeviceDriverOpengl::image_bind_sampled(const Image& r_image, uint32_t p_unit) const
 {
     glBindTextureUnit(p_unit, r_image.image);
 }
 
-void RenderingDeviceDriverOpengl::image_bind_storage(Image& r_image, uint32_t p_unit, GLenum p_access)
+void RenderingDeviceDriverOpengl::image_bind_storage(const Image& r_image, uint32_t p_unit, GLenum p_access) const
 {
     glBindImageTexture(p_unit, r_image.image, 0, GL_FALSE, 0, p_access, r_image.format);
 }
-    
+
+/*********************/
+/**** FRAMEBUFFER ****/
+/*********************/
+
+RenderingDeviceDriverOpengl::Framebuffer RenderingDeviceDriverOpengl::framebuffer_create(const std::vector<Image*>&p_colors, Image* p_depth)
+{
+    Framebuffer framebuffer;
+
+    glCreateFramebuffers(1, &framebuffer.framebuffer);
+
+    if (!p_colors.empty()) {
+        std::vector<GLenum> draw_buffers;
+        draw_buffers.reserve(p_colors.size());
+
+        for (uint32_t i = 0; i < p_colors.size(); i++) {
+            glNamedFramebufferTexture(framebuffer.framebuffer, GL_COLOR_ATTACHMENT0 + i, p_colors[i]->image, 0);
+            draw_buffers.push_back(GL_COLOR_ATTACHMENT0 + 1);
+        }
+
+        glNamedFramebufferDrawBuffers(framebuffer.framebuffer, static_cast<GLsizei>(draw_buffers.size()), draw_buffers.data());
+    } else {
+        glNamedFramebufferDrawBuffer(framebuffer.framebuffer, GL_NONE);
+        glNamedFramebufferReadBuffer(framebuffer.framebuffer, GL_NONE);
+    }
+
+    if (p_depth) {
+        glNamedFramebufferTexture(framebuffer.framebuffer, GL_DEPTH_ATTACHMENT, p_depth->image, 0);
+    }
+    GLenum err = glCheckNamedFramebufferStatus(framebuffer.framebuffer, GL_FRAMEBUFFER);
+    BALLISTIC_ERR_FAIL_COND_V_MSG(err != GL_FRAMEBUFFER_COMPLETE, {}, "Failed to create Opengl framebuffer.");
+
+    return framebuffer;
+}
+
+void RenderingDeviceDriverOpengl::framebuffer_free(Framebuffer& r_framebuffer)
+{
+    if (r_framebuffer.framebuffer) {
+        glDeleteFramebuffers(1, &r_framebuffer.framebuffer);
+        r_framebuffer.framebuffer = 0;
+    }
+}
+
+void RenderingDeviceDriverOpengl::framebuffer_bind(const Framebuffer& r_framebuffer) const
+{
+    glBindFramebuffer(GL_FRAMEBUFFER, r_framebuffer.framebuffer);
+}
+
+void RenderingDeviceDriverOpengl::framebuffer_unbind()
+{
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
 }
