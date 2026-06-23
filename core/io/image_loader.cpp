@@ -2,7 +2,7 @@
 #include <stb_image.h>
 #include <vector>
 
-namespace ballistic {
+namespace ballistic2d {
 
 static bool get_resource_bytes(const std::wstring& p_resource_name, const void*& p_data, DWORD& p_size)
 {

@@ -2,7 +2,7 @@
 #pragma once
 #include <core/application/application.h>
 
-namespace ballistic {
+namespace ballistic2d {
 
 struct GameApplication : Application
 {

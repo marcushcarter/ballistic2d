@@ -1,6 +1,6 @@
 #include <core/io/embedded_resource.h>
 
-namespace ballistic {
+namespace ballistic2d {
 
 HICON EmbeddedResource::load_icon(const std::wstring& p_resource_name) {
     return LoadIconW(GetModuleHandleW(nullptr), p_resource_name.c_str());

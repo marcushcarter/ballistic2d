@@ -17,12 +17,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         freopen_s(&dummy, "NUL", "r", stdin);
     }
 
-    ballistic::ApplicationCreateInfo info;
+    ballistic2d::ApplicationCreateInfo info;
     info.window_title = L"Ballistic Editor";
     info.width = 1280;
     info.height = 720;
 
-    ballistic::EditorApplication app;
+    ballistic2d::EditorApplication app;
     app.create(info);
     return app.run();
 }

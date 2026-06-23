@@ -1,6 +1,6 @@
 #pragma once
 
-namespace ballistic {
+namespace ballistic2d {
 
 enum class Error 
 {

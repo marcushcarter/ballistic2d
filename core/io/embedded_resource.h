@@ -2,7 +2,7 @@
 #include <windows.h>
 #include <string>
 
-namespace ballistic {
+namespace ballistic2d {
 
 struct EmbeddedResource
 {

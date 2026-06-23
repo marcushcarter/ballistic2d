@@ -1,7 +1,7 @@
 #include <core/error/error.h>
 #include <iterator>
 
-namespace ballistic {
+namespace ballistic2d {
 
 const char *error_names[] = {
 	"OK",

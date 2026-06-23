@@ -1,6 +1,6 @@
 #include <core/application/game_application.h>
 
-namespace ballistic {
+namespace ballistic2d {
 
 Error GameApplication::on_init()
 {

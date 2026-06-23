@@ -1,7 +1,7 @@
 #include <core/rendering/renderer.h>
 #include <core/error/error_macros.h>
 
-namespace ballistic {
+namespace ballistic2d {
 
 Error Renderer::create(uint32_t p_frame_count)
 {
@@ -18,9 +18,12 @@ void Renderer::destroy()
 
 }
 
-Error Renderer::check_resize()
+Error Renderer::set_size(uint32_t p_width, uint32_t p_height)
 {
     using enum Error;
+
+    if (p_width == 0 || p_height == 0) return Ok;
+    if (p_width == width && p_height == height) return Ok;
 
     return Ok;
 }
@@ -28,6 +31,10 @@ Error Renderer::check_resize()
 Error Renderer::begin_frame()
 {
     using enum Error;
+    
+    glClearColor(0,0,0,1);
+    glClear(GL_COLOR_BUFFER_BIT);
+    glViewport(0,0,width,height);
     
     return Ok;
 }

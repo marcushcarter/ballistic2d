@@ -3,12 +3,12 @@
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
-    ballistic::ApplicationCreateInfo info;
+    ballistic2d::ApplicationCreateInfo info;
     info.window_title = L"Ballistic Game";
     info.width = 1280;
     info.height = 720;
 
-    ballistic::GameApplication app;
+    ballistic2d::GameApplication app;
     app.create(info);
     return app.run();
 }
