@@ -18,7 +18,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     }
 
     ballistic2d::ApplicationCreateInfo info;
-    info.window_title = L"Ballistic Editor";
+    info.window_title = "";
     info.width = 1280;
     info.height = 720;
 

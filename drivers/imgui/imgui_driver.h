@@ -1,5 +1,6 @@
 #pragma once
 #include <core/error/error.h>
+#include <string>
 
 struct GLFWwindow;
 
@@ -9,10 +10,13 @@ struct ImGuiDriverCreateInfo
 {
     GLFWwindow* window = nullptr;
     const char* glsl_version = "#version 460";
+    std::string ini_path;
 };
 
 struct ImGuiDriver
 {
+    std::string ini_path;
+
     Error create(const ImGuiDriverCreateInfo& p_info);
     void destroy();
 

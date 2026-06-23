@@ -4,7 +4,7 @@
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
     ballistic2d::ApplicationCreateInfo info;
-    info.window_title = L"Ballistic Game";
+    info.window_title = "Ballistic2D Game";
     info.width = 1280;
     info.height = 720;
 

@@ -14,7 +14,10 @@ Error ImGuiDriver::create(const ImGuiDriverCreateInfo& p_info)
     ImGuiIO& io = ImGui::GetIO();
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-    io.IniFilename = nullptr;
+    
+    ini_path = p_info.ini_path;
+    io.IniFilename = ini_path.empty() ? nullptr : ini_path.c_str();
+
     ImGui::StyleColorsDark();
 
     BALLISTIC_ERR_FAIL_COND_V_MSG(!ImGui_ImplGlfw_InitForOpenGL(p_info.window, true), Failed,

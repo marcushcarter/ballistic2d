@@ -16,4 +16,5 @@ PUBLIC
     ballistic_compiler_options
     ballistic_drivers
     stb
+    IconFontCppHeaders
 )

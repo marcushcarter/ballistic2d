@@ -8,7 +8,7 @@
 
 namespace ballistic2d::drivers {    
 
-Error WindowDriverGlfw::create(const std::wstring& p_title, int p_width, int p_height)
+Error WindowDriverGlfw::create(const std::string& p_title, int p_width, int p_height)
 {
     using enum Error;
     
@@ -19,11 +19,7 @@ Error WindowDriverGlfw::create(const std::wstring& p_title, int p_width, int p_h
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    int utf8_size = WideCharToMultiByte(CP_UTF8, 0, p_title.c_str(), -1, nullptr, 0, nullptr, nullptr);
-    std::string title_utf8(utf8_size, 0);
-    WideCharToMultiByte(CP_UTF8, 0, p_title.c_str(), -1, title_utf8.data(), utf8_size, nullptr, nullptr);
-    
-    window = glfwCreateWindow(p_width, p_height, title_utf8.c_str(), nullptr, nullptr);
+    window = glfwCreateWindow(p_width, p_height, p_title.c_str(), nullptr, nullptr);
     BALLISTIC_ERR_FAIL_COND_V(!window, Failed);
 
     glfwMakeContextCurrent(window);
@@ -65,6 +61,14 @@ void WindowDriverGlfw::request_close()
 void WindowDriverGlfw::swap_buffers() const
 {
     glfwSwapBuffers(window);
+}
+
+Error WindowDriverGlfw::set_title(const std::string& p_title)
+{
+    using enum Error;
+    BALLISTIC_ERR_FAIL_COND_V(!window, Failed);
+    glfwSetWindowTitle(window, p_title.c_str());
+    return Ok;
 }
 
 Error WindowDriverGlfw::set_icon(HICON p_icon)

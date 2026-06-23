@@ -10,7 +10,7 @@ namespace ballistic2d {
 
 struct ApplicationCreateInfo
 {
-    std::wstring window_title;
+    std::string window_title;
     int width = 1280;
     int height = 720;
 };
@@ -25,10 +25,14 @@ struct Application
 
     Renderer renderer;
 
+    std::string project_path;
+
     Error create(const ApplicationCreateInfo& p_info);
     void destroy();
 
     int run();
+    
+    void _load_project(const std::string& p_project_folder);
 
     virtual Error on_init() { return Error::Ok; }
     virtual void on_update(float p_dt) { (void)p_dt; }
