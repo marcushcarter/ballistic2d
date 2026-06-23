@@ -45,12 +45,6 @@ struct RenderingDeviceDriverOpengl
 
     struct Framebuffer {
         uint32_t framebuffer = 0;
-
-        uint32_t width = 0;
-        uint32_t height = 0;
-
-        uint32_t color_attachment_count = 0;
-
     };
 
     Framebuffer framebuffer_create(const std::vector<Image*>&p_colors, Image* p_depth);

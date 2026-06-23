@@ -13,6 +13,11 @@ struct Renderer
     uint32_t width = 0;
     uint32_t height = 0;
 
+    drivers::RenderingDeviceDriverOpengl::Framebuffer framebuffer;
+    drivers::RenderingDeviceDriverOpengl::Image picking_target;
+    drivers::RenderingDeviceDriverOpengl::Image depth_target;
+    drivers::RenderingDeviceDriverOpengl::Image color_target;
+
     uint32_t frame_count = 1;
     uint32_t current_frame = 0;
 

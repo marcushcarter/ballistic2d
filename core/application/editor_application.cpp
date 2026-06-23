@@ -258,9 +258,9 @@ void EditorApplication::_update_editor()
     if (size.x > 0 && size.y > 0) {
         uint32_t w = (uint32_t)size.x;
         uint32_t h = (uint32_t)size.y;
-        if (w != renderer.width || h != renderer.height) renderer.set_size(w, h);
+        renderer.set_size(w, h);
         ImVec2 pos = ImGui::GetCursorScreenPos();
-        ImGui::Image((ImTextureID)(uint64_t)0, size, ImVec2(0, 1), ImVec2(1, 0));
+        ImGui::Image((ImTextureID)(uint64_t)renderer.color_target.image, size, ImVec2(0, 1), ImVec2(1, 0));
     }
 
     ImGui::End();

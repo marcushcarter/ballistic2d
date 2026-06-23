@@ -80,16 +80,16 @@ int Application::run()
 
         window.poll_events();
 
-        err = renderer.set_size(window.width, window.height);
-        BALLISTIC_ERR_FAIL_COND_V(err != Ok, static_cast<int>(err));
-
         imgui.new_frame();
         on_update((float)delta);
         imgui.render();
 
         renderer.begin_frame();
-        imgui.record_commands();
         renderer.end_frame();
+        
+        device_driver.framebuffer_unbind();
+        glViewport(0,0,window.width,window.height);
+        imgui.record_commands();
 
         window.swap_buffers();
     }
